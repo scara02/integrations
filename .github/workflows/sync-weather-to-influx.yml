@@ -3,11 +3,11 @@ name: Sync Fabric Weather Data to InfluxDB
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 * * * *"
+    - cron: "15 0 * * 1"
 
 jobs:
   sync-weather:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
@@ -18,8 +18,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y curl gnupg unixodbc unixodbc-dev
       
-          curl https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --no-tty --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-          curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
       
           sudo apt-get update
           sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
