@@ -47,7 +47,7 @@ jobs:
           INFLUXDB_ORG: ${{ secrets.INFLUXDB_ORG }}
           INFLUXDB_BUCKET: ${{ secrets.INFLUXDB_BUCKET }}
 
-          FABRIC_TABLE: "dbo.weather_nyc_hourly"
+          FABRIC_TABLE: "weather_nyc_hourly"
           LOOKBACK_HOURS: "40000"
         run: |
           python scripts/fabric_to_influx.py
